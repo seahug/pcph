@@ -1,0 +1,6 @@
+[submodule "parconc-examples"]
+	path = parconc-examples
+	url = git@github.com:rcook/parconc-examples.git
+[submodule "examples/src"]
+	path = examples/src
+	url = https://github.com/seahug/parconc-examples.git

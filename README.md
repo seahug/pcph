@@ -35,7 +35,7 @@ $ cabal build
 ### <a name="docker-container"></a>Install and build in a Docker container
 
 This method relies on [Docker][docker] and the standard [Haskell
-image][docker-haskell] from Docker Hub. This approach will ensure you are using
+image][haskell-docker] from Docker Hub. This approach will ensure you are using
 the latest compatible GHC compiler in a completely isolated environment. The
 instructions also assume that you have a working version of [GNU
 Make][gnu-make] on your system, which is almost always the case.

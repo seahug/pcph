@@ -1,31 +1,76 @@
 # SeaHUG "Parallel and concurrent programming in Haskell" materials
 
-Materials for "Parallel and concurrent programming in Haskell" course
+## About the book
 
-## Make sure you can build examples from the book
+To get more information about the source text "Parallel and Concurrent
+Programming in Haskell" by Simon Marlow, please visit the [book's web
+site][book].  You can purchase the book or read it online there for free.
 
-The method described here relies on [Docker][1] and the standard [Haskell
-image][2] from Docker Hub. You should be able to achieve comparable results
-using the [Haskell platform][3] for your operating system.
+## Building the code samples
 
-### Install Docker
+To get the most out of the class, you are strongly advised to make sure you are
+able to build the samples from the book before you turn up for the first
+session. There are several ways to do this. This document describes perhaps the
+two most common methods: using a [Cabal sandbox](#cabal-sandbox) and using a
+[Docker container](#docker-container). The instructions given here are specific
+to Linux, though you should be able to get equivalent results on Windows and
+Mac OS X&mdash;do note, however, that building/installing Haskell's
+network-related packages is [notoriously difficult][network-windows], though
+not impossible, on Windows.
 
-Follow [Docker installation instructions][4].
+### <a name="cabal-sandbox"></a>Install and build using a Cabal sandbox
 
-### Build Docker image and run container
-
-The provided `Makefile` creates a Docker image based on the standard Haskell
-base image and can run a container that mounts the `src` directory containing
-Simon Marlow's [code samples][5].
+This approach assumes that you have a working installation of [GHC][ghc]
+including the [`cabal-install`][cabal-install] package. These steps have been
+tested with GHC 7.10.2, though GHC 7.10.3 and GHC 7.8.4 should also work.
 
 ```bash
-$ git clone https://github.com/seahug/pcph.git
-$ cd examples/
+$ git clone https://github.com/seahug/parconc-examples.git
+$ cd parconc-examples/
+$ cabal sandbox init
+$ cabal install --only-dependencies
+$ cabal build
+```
+
+### <a name="docker-container"></a>Install and build in a Docker container
+
+This method relies on [Docker][docker] and the standard [Haskell
+image][docker-haskell] from Docker Hub. This approach will ensure you are using
+the latest compatible GHC compiler in a completely isolated environment. The
+instructions also assume that you have a working version of [GNU
+Make][gnu-make] on your system, which is almost always the case.
+
+#### Install Docker
+
+[Follow the Docker installation instructions][docker-install].
+
+#### Build Docker image
+
+The `Makefile` file in the `examples` directory can be used to create a Docker
+image based on the standard Haskell base image. Note that we clone the Git repo
+using the `--recursive` switch in order to clone all the repo's submodules.
+
+```bash
+$ git clone --recursive https://github.com/seahug/pcph.git
+$ cd pcph/examples/
 $ make
+```
+
+#### Run Docker container
+
+The `Makefile` can also be used to run a Docker container from the image
+created in the previous step. From the `pcph/examples` directory:
+
+```bash
 $ make run
 ```
 
+This will start the Docker container and connect your terminal to its shell.
+
 ### Build code samples inside Docker container
+
+Inside the Docker container's shell, you can initialize the sandbox and build
+the code as follows:
 
 ```bash
 $ cd /src/
@@ -40,9 +85,11 @@ The resulting binaries will be placed in the `dist/build` directory.
 
 Released under MIT License
 
-[1]: https://www.docker.com/
-[2]: https://hub.docker.com/_/haskell/
-[3]: https://www.haskell.org/platform/
-[4]: https://docs.docker.com/engine/installation/
-[5]: https://github.com/seahug/parconc-examples
-
+[book]: http://chimera.labs.oreilly.com/books/1230000000929
+[cabal-install]: https://wiki.haskell.org/Cabal-Install
+[docker-install]: https://docs.docker.com/engine/installation/
+[docker]: https://www.docker.com/
+[ghc]: https://www.haskell.org/downloads
+[gnu-make]: https://www.gnu.org/software/make/
+[haskell-docker]: https://hub.docker.com/_/haskell/
+[network-windows]: http://neilmitchell.blogspot.com/2010/12/installing-haskell-network-library-on.html

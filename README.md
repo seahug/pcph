@@ -18,6 +18,9 @@ Mac OS X&mdash;do note, however, that building/installing Haskell's
 network-related packages is [notoriously difficult][network-windows], though
 not impossible, on Windows.
 
+Note that you can also follow the [official instructions][official] from the
+online version of the book.
+
 ### <a name="cabal-sandbox"></a>Install and build using a Cabal sandbox
 
 This approach assumes that you have a working installation of [GHC][ghc]
@@ -93,3 +96,4 @@ Released under MIT License
 [gnu-make]: https://www.gnu.org/software/make/
 [haskell-docker]: https://hub.docker.com/_/haskell/
 [network-windows]: http://neilmitchell.blogspot.com/2010/12/installing-haskell-network-library-on.html
+[official]: http://chimera.labs.oreilly.com/books/1230000000929/ch01.html#sec_sample

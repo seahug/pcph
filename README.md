@@ -4,17 +4,18 @@
 
 To get more information about the source text "Parallel and Concurrent
 Programming in Haskell" by Simon Marlow, please visit the [book's web
-site][book].  You can purchase the book or read it online there for free.
+site][book]. You can purchase the book or read it online there for free.
 
 ## Building the code samples
 
-To get the most out of the class, you are strongly advised to make sure you are
-able to build the samples from the book before you turn up for the first
-session. There are several ways to do this. This document describes perhaps the
-two most common methods: using a [Cabal sandbox](#cabal-sandbox) and using a
-[Docker container](#docker-container). The instructions given here are specific
-to Linux, though you should be able to get equivalent results on Windows and
-Mac OS X&mdash;do note, however, that building/installing Haskell's
+None of the steps described in this document are necessary in order to take a
+full part in the course, since we assume minimal prior experience with Haskell.
+
+However, if you do wish to build the code samples, this document describes
+perhaps the two most common methods: using a [Cabal sandbox](#cabal-sandbox)
+and using a [Docker container](#docker-container). The instructions given here
+are specific to Linux, though you should be able to get equivalent results on
+Windows and Mac OS X&mdash;do note, however, that building/installing Haskell's
 network-related packages is [notoriously difficult][network-windows], though
 not impossible, on Windows.
 

@@ -6,86 +6,131 @@ To get more information about the source text "Parallel and Concurrent
 Programming in Haskell" by Simon Marlow, please visit the [book's web
 site][book]. You can purchase the book or read it online there for free.
 
-## Building the code samples
+## Installing stack
 
-None of the steps described in this document are necessary in order to take a
-full part in the course, since we assume minimal prior experience with Haskell.
+Stack is a tool for downloading, installing, and building haskell projects.  It
+takes care of handling multiple compiler versions, and supports sandboxing
+sharing build results between projects.
 
-However, if you do wish to build the code samples, this document describes
-perhaps the two most common methods: using a [Cabal sandbox](#cabal-sandbox)
-and using a [Docker container](#docker-container). The instructions given here
-are specific to Linux, though you should be able to get equivalent results on
-Windows and Mac OS X&mdash;do note, however, that building/installing Haskell's
-network-related packages is [notoriously difficult][network-windows], though
-not impossible, on Windows.
+### Windows 64bit
 
-Note that you can also follow the [official instructions][official] from the
-online version of the book.
+Download and run the installer from
+[here](https://www.stackage.org/stack/windows-x86_64-installer).
 
-### <a name="cabal-sandbox"></a>Install and build using a Cabal sandbox
+Also, take a look at the instructions
+[here](http://docs.haskellstack.org/en/stable/install_and_upgrade/#windows).
+While not strictly necessary, it is a good idea to use `set
+STACK_ROOT=c:\stack_root` with stack, due to windows MAX_PATH restrictions.
 
-This approach assumes that you have a working installation of [GHC][ghc]
-including the [`cabal-install`][cabal-install] package. These steps have been
-tested with GHC 7.10.2, though GHC 7.10.3 and GHC 7.8.4 should also work.
+### Mac OS
 
-```bash
-$ git clone https://github.com/seahug/parconc-examples.git
-$ cd parconc-examples/
-$ cabal sandbox init
-$ cabal install --only-dependencies
-$ cabal build
+```
+brew install haskell-stack
 ```
 
-### <a name="docker-container"></a>Install and build in a Docker container
+### Linux 64bit
 
-This method relies on [Docker][docker] and the standard [Haskell
-image][haskell-docker] from Docker Hub. This approach will ensure you are using
-the latest compatible GHC compiler in a completely isolated environment. The
-instructions also assume that you have a working version of [GNU
-Make][gnu-make] on your system, which is almost always the case.
+There are also distribution specific versions (see the "Other" section below),
+but I find this to be the most straightforward way to get a recent version:
 
-#### Install Docker
+```
+wget https://github.com/commercialhaskell/stack/releases/download/v1.0.4/stack-1.0.4-linux-x86_64.tar.gz
+mkdir -p ~/.local/bin
+tar -xvf stack-1.0.4-linux-x86_64.tar.gz
+mv stack-1.0.4-linux-x86_64/stack ~/.local/bin/stack
 
-[Follow the Docker installation instructions][docker-install].
-
-#### Build Docker image
-
-The `Makefile` file in the `examples` directory can be used to create a Docker
-image based on the standard Haskell base image. Note that we clone the Git repo
-using the `--recursive` switch in order to clone all the repo's submodules.
-
-```bash
-$ git clone --recursive https://github.com/seahug/pcph.git
-$ cd pcph/examples/
-$ make
+# Optionally, remove the archive and its unpacked dir
+rm -r stack-1.0.4-linux-x86_64
+rm stack-1.0.4-linux-x86_64.tar.gz
 ```
 
-#### Run Docker container
+Then, try `which stack`. If the response is not the `.local/bin/stack` folder
+within your home directory, then you will need to add `.local/bin/stack` to your
+PATH. To do this, add the following to your `~/.profile`, and then start a new
+terminal:
 
-The `Makefile` can also be used to run a Docker container from the image
-created in the previous step. From the `pcph/examples` directory:
-
-```bash
-$ make run
+```
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 ```
 
-This will start the Docker container and connect your terminal to its shell.
+### Other
 
-### Build code samples inside Docker container
+See the installation instructions
+[here](http://docs.haskellstack.org/en/stable/install_and_upgrade/).
 
-Inside the Docker container's shell, you can initialize the sandbox and build
-the code as follows:
+## Cloning this repo and setting up your environment
 
-```bash
-$ cd /src/
-$ cabal sandbox init
-$ cabal install --only-dependencies
-$ cabal build
+Since this repo has a submodule, we need to use `--recursive` when cloning:
+
+```
+git clone --recursive https://github.com/seahug/pcph.git
 ```
 
-The resulting binaries will be placed in the `dist/build` directory.
+We then ask stack to setup an appropriate version of GHC:
 
-# Licence
+```
+cd pcph
+stack setup
+```
+
+## Loading examples into ghci
+
+Usually we'll only want to load up a single example at a time.  `stack ghci` is
+a good way to do this:
+
+```
+mgsloan@computer:~/oss/seahug/pcph$ stack ghci --no-build :parmonad
+There were multiple candidates for the Cabal entry "Lex" (/home/mgsloan/oss/seahug/pcph/examples/parinfer/Lex.x), picking /home/mgsloan/oss/seahug/pcph/examples/parinfer/Lex.hs
+There were multiple candidates for the Cabal entry "Parse" (/home/mgsloan/oss/seahug/pcph/examples/parinfer/Parse.y), picking /home/mgsloan/oss/seahug/pcph/examples/parinfer/Parse.hs
+There were multiple candidates for the Cabal entry "Lex" (/home/mgsloan/oss/seahug/pcph/examples/parinfer/Lex.x), picking /home/mgsloan/oss/seahug/pcph/examples/parinfer/Lex.hs
+There were multiple candidates for the Cabal entry "Parse" (/home/mgsloan/oss/seahug/pcph/examples/parinfer/Parse.y), picking /home/mgsloan/oss/seahug/pcph/examples/parinfer/Parse.hs
+The following GHC options are incompatible with GHCi and have not been passed to it: -threaded
+Using main module: 1. Package `parconc-examples' component exe:parmonad with main-is file: /home/mgsloan/oss/seahug/pcph/examples/parmonad.hs
+Configuring GHCi with the following packages: parconc-examples
+GHCi, version 7.8.4: http://www.haskell.org/ghc/  :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package integer-gmp ... linking ... done.
+Loading package base ... linking ... done.
+Loading package array-0.5.0.0 ... linking ... done.
+Loading package deepseq-1.3.0.2 ... linking ... done.
+Loading package containers-0.5.5.1 ... linking ... done.
+Loading package old-locale-1.0.0.6 ... linking ... done.
+Loading package time-1.4.2 ... linking ... done.
+Loading package random-1.0.1.1 ... linking ... done.
+Loading package abstract-deque-0.3 ... linking ... done.
+Loading package abstract-par-0.3.3 ... linking ... done.
+Loading package bytestring-0.10.4.0 ... linking ... done.
+Loading package cereal-0.4.1.1 ... linking ... done.
+Loading package transformers-0.3.0.0 ... linking ... done.
+Loading package mtl-2.1.3.1 ... linking ... done.
+Loading package monad-par-extras-0.3.3 ... linking ... done.
+Loading package primitive-0.6.1.0 ... linking ... done.
+Loading package vector-0.10.12.3 ... linking ... done.
+Loading package mwc-random-0.13.4.0 ... linking ... done.
+Loading package parallel-3.2.0.6 ... linking ... done.
+Loading package monad-par-0.3.4.7 ... linking ... done.
+unknown option: 'c'
+[1 of 1] Compiling Main             ( /home/mgsloan/oss/seahug/pcph/examples/parmonad.hs, interpreted )
+Ok, modules loaded: Main.
+*Main> :set args 4 5
+*Main> main
+13
+*Main> :t fib
+fib :: Integer -> Integer
+*Main> :bro
+fib :: Integer -> Integer
+main :: IO ()
+```
+
+## Building all examples
+
+To build optimized versions of the examples, run `stack build`.  Then, you can
+run the example by name by using `stack exec`.  For example, `stack exec --
+parmonad 4 5`.
+
+# License
 
 Released under MIT License
 

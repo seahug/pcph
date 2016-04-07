@@ -75,19 +75,6 @@ cd pcph
 stack setup
 ```
 
-Before the code samples can be built, you can get Stack to build and install
-appropriate versions of the build tools [Alex][alex] and [Happy][happy]:
-
-```bash
-stack build alex happy
-```
-
-You can then build all code samples in one go as follows:
-
-```bash
-stack build
-```
-
 ## Loading examples into ghci
 
 Usually we'll only want to load up a single example at a time.  `stack ghci` is
@@ -147,14 +134,12 @@ parmonad 4 5`.
 
 Released under MIT License
 
-[alex]: https://www.haskell.org/alex/
 [book]: http://chimera.labs.oreilly.com/books/1230000000929
 [cabal-install]: https://wiki.haskell.org/Cabal-Install
 [docker-install]: https://docs.docker.com/engine/installation/
 [docker]: https://www.docker.com/
 [ghc]: https://www.haskell.org/downloads
 [gnu-make]: https://www.gnu.org/software/make/
-[happy]: https://www.haskell.org/happy/
 [haskell-docker]: https://hub.docker.com/_/haskell/
 [network-windows]: http://neilmitchell.blogspot.com/2010/12/installing-haskell-network-library-on.html
 [official]: http://chimera.labs.oreilly.com/books/1230000000929/ch01.html#sec_sample

@@ -10,7 +10,6 @@ packages:
 # Packages to be pulled from upstream that are not in the resolver (e.g., acme-missiles-0.3)
 extra-deps:
 - HTTP-4000.2.19
-- QuickCheck-2.7.6
 - abstract-deque-0.3
 - abstract-par-0.3.3
 - async-2.0.2
@@ -23,8 +22,6 @@ extra-deps:
 - hashable-1.2.3.2
 - monad-par-0.3.4.7
 - monad-par-extras-0.3.3
-- mtl-2.1.3.1
-- mwc-random-0.13.4.0
 - network-2.4.2.3
 - network-multicast-0.0.11
 - network-transport-0.4.1.0
@@ -32,22 +29,16 @@ extra-deps:
 - normaldistribution-1.1.0.3
 - parallel-3.2.0.6
 - parsec-3.1.8
-- primitive-0.6.1.0
-- random-1.0.1.1
 - rank1dynamic-0.2.0.1
 - repa-3.3.1.2
 - stm-2.4.4
 - syb-0.4.4
-- text-1.2.0.4
-- tf-random-0.5
 - utf8-string-0.3.8
 - vector-0.10.12.3
 - xml-1.3.14
 
 # Override default flag values for local packages and extra-deps
 flags:
-  text:
-    integer-simple: false
   HTTP:
     network-uri: false
   parconc-examples:
